@@ -6,17 +6,10 @@ export function getAddrs(
   const addrs = new Map<string, string>() // no duplication address
 
   for (const m of messages) {
-    const addrsInMessage = [
-      m.author,
-      ...m.recipients,
-      ...m.ccList,
-      ...m.bccList,
-    ]
-
-    for (const v of addrsInMessage) {
-      const k = realAddr(v)
-      addrs.set(k, v)
-    }
+    // Only get the sender/author
+    const sender = m.author
+    const k = realAddr(sender)
+    addrs.set(k, sender)
   }
 
   return Array.from(addrs.values())
